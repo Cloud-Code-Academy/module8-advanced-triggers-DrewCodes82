@@ -30,6 +30,12 @@ public with sharing class AccountHelper {
     
     public void setTypeProspect(SObject objects){
 
+        for (Account acc : newAccsList) {
+            if (acc.Type == null) {
+                acc.Type = 'Prospect';
+            }
+        }
+
     }
 
     void addressCopy(){

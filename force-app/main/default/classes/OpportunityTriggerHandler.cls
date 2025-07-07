@@ -10,9 +10,41 @@ public with sharing class OpportunityTriggerHandler extends TriggerHandler {
         this.newOppsMap = (Map<Id,Opportunity>)Trigger.newMap;
         this.oldOppsList = (List<Opportunity>)Trigger.old;
         this.oldOppsMap = (Map<Id,Opportunity>)Trigger.oldMap;
+        this.setMaxLoopCount(1);
     }
 
     public override void beforeInsert(){ 
+        
+        
+    }
+
+    public override void afterInsert(){ 
+        
+        
+    }
+
+    public override void beforeUpdate(){ 
+        
+        
+    }
+
+    public override void afterUpdate(){ 
+        
+        
+    }
+
+    public override void beforeDelete(){ 
+        
+        
+    }
+
+    public override void afterDelete(){ 
+        
+        
+    }
+
+    public override void afterUndelete(){ 
+        
         
     }
 

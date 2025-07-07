@@ -10,15 +10,42 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
         this.newAccsMap = (Map<Id,Account>)Trigger.newMap;
         this.oldAccsList = (List<Account>)Trigger.old;
         this.oldAccsMap = (Map<Id,Account>)Trigger.oldMap;
+        this.setMaxLoopCount(1);
     }
 
     public override void beforeInsert(){ 
         
-        for (Account acc : newAccsList) {
-            if (acc.Type == null) {
-                acc.Type = 'Prospect';
-            }
-        }
+        
+    }
+
+    public override void afterInsert(){ 
+        
+        
+    }
+
+    public override void beforeUpdate(){ 
+        
+        
+    }
+
+    public override void afterUpdate(){ 
+        
+        
+    }
+
+    public override void beforeDelete(){ 
+        
+        
+    }
+
+    public override void afterDelete(){ 
+        
+        
+    }
+
+    public override void afterUndelete(){ 
+        
+        
     }
 
 }
