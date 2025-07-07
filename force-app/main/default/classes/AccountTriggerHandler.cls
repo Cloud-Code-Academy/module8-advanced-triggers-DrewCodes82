@@ -14,7 +14,7 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
 
     public override void beforeInsert(){ 
         
-        for (Account acc : Trigger.new) {
+        for (Account acc : newAccsList) {
             if (acc.Type == null) {
                 acc.Type = 'Prospect';
             }
