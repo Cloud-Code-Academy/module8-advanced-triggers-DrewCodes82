@@ -17,6 +17,9 @@ Remember, whichever option you choose, ensure that the trigger is activated and 
 */
 trigger OpportunityTrigger on Opportunity (before update, after update, before delete) {
 
+    OpportunityTriggerHandler handler = new OpportunityTriggerHandler();
+    handler.run();
+    
     /*
     * Opportunity Trigger
     * When an opportunity is updated validate that the amount is greater than 5000.
