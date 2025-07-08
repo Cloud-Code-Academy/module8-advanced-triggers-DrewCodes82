@@ -27,6 +27,8 @@ Remember:
 Always ensure that your helper methods are bulk-safe to handle multiple records efficiently. 
 */
 public with sharing class AccountHelper {
+
+    private static Boolean hasRunDefaultContact = false;
     
     public static void setTypeProspect(List<Account> newAccsList){
         
@@ -65,7 +67,7 @@ public with sharing class AccountHelper {
     }
 
     public static void setRating(List<Account> newAccsList){
-
+        
         for (Account acc : newAccsList) {
             if (acc.Phone != null && acc.Website != null && acc.Fax != null) {
                 acc.Rating = 'Hot';
@@ -75,6 +77,13 @@ public with sharing class AccountHelper {
     }
 
     public static void defaultContact(List<Account> newAccsList){
+        
+        if(hasRunDefaultContact){
+            return;
+        }
+        
+        hasRunDefaultContact = true;
+
         List<Contact> contacts = new List<Contact>();   
         for(Account acc : newAccsList){
             Contact con = new Contact();
@@ -83,7 +92,9 @@ public with sharing class AccountHelper {
             con.AccountId = acc.Id;
             contacts.add(con);
         }
-
-        insert contacts;
+        if(!contacts.isEmpty()){
+            insert contacts;
+        }
+    
     }
 }

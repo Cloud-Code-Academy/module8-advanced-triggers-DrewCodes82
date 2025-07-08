@@ -14,7 +14,7 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
     }
 
     public override void beforeInsert(){ 
-        
+
         AccountHelper.setTypeProspect(newAccsList);
         AccountHelper.addressCopy(newAccsList);
         AccountHelper.setRating(newAccsList);
