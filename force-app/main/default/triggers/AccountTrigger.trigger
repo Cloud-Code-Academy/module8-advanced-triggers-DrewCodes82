@@ -17,8 +17,13 @@ For this lesson, students have two options:
 
 Let's dive into the specifics of each operation:
 */
-trigger AccountTrigger on Account (before insert, after insert) {
+trigger AccountTrigger on Account (before insert, after insert,
+                                    before update, after update,
+                                    before delete, after delete,
+                                    after undelete) {
 
+    AccountTriggerHandler handler = new AccountTriggerHandler();
+    handler.run();                                    
     /*
     * Account Trigger
     * When an account is inserted change the account type to 'Prospect' if there is no value in the type field.
@@ -37,7 +42,7 @@ trigger AccountTrigger on Account (before insert, after insert) {
     * When an account is inserted copy the shipping address to the billing address.
     * Trigger should only fire on insert.
     */
-    if (Trigger.isBefore && Trigger.isInsert) {
+    /* if (Trigger.isBefore && Trigger.isInsert) {
         for (Account acc : Trigger.new) {
             if (acc.ShippingStreet != null) {
                 acc.BillingStreet = acc.ShippingStreet;
@@ -59,20 +64,20 @@ trigger AccountTrigger on Account (before insert, after insert) {
                 acc.BillingCountry = acc.ShippingCountry;
             }
         }        
-    }
+    } */
 
     /*
     * Account Trigger
     * When an account is inserted set the rating to 'Hot' if the Phone, Website, and Fax is not empty.
     * Trigger should only fire on insert.
     */
-    if (Trigger.isBefore && Trigger.isInsert) {
+    /* if (Trigger.isBefore && Trigger.isInsert) {
         for (Account acc : Trigger.new) {
             if (acc.Phone != null && acc.Website != null && acc.Fax != null) {
                 acc.Rating = 'Hot';
             }
         }
-    }
+    } */
     
     /*
     * Account Trigger
@@ -81,7 +86,7 @@ trigger AccountTrigger on Account (before insert, after insert) {
     * Email = 'default@email.com'
     * Trigger should only fire on insert.
     */    
-    if(Trigger.isAfter && Trigger.isInsert){     
+    /* if(Trigger.isAfter && Trigger.isInsert){     
         List<Contact> contacts = new List<Contact>();   
         for(Account acc : Trigger.new){
             Contact con = new Contact();
@@ -91,5 +96,5 @@ trigger AccountTrigger on Account (before insert, after insert) {
             contacts.add(con);
         }
         insert contacts; 
-    }
+    } */
 }
