@@ -30,6 +30,7 @@ public with sharing class AccountHelper {
 
     private static Boolean hasRunDefaultContact = false;
     
+    // BEFORE_INSERT
     public static void setTypeProspect(List<Account> newAccsList){
         
         for (Account acc : newAccsList) {
@@ -40,6 +41,7 @@ public with sharing class AccountHelper {
         
     }
 
+    // BEFORE_INSERT
     public static void addressCopy(List<Account> newAccsList){
         
         for (Account acc : newAccsList) {
@@ -66,6 +68,7 @@ public with sharing class AccountHelper {
 
     }
 
+    // BEFORE_INSERT
     public static void setRating(List<Account> newAccsList){
         
         for (Account acc : newAccsList) {
@@ -76,12 +79,13 @@ public with sharing class AccountHelper {
 
     }
 
+    // AFTER INSERT
     public static void defaultContact(List<Account> newAccsList){
         
         if(hasRunDefaultContact){
             return;
         }
-        
+
         hasRunDefaultContact = true;
 
         List<Contact> contacts = new List<Contact>();   
@@ -92,6 +96,7 @@ public with sharing class AccountHelper {
             con.AccountId = acc.Id;
             contacts.add(con);
         }
+
         if(!contacts.isEmpty()){
             insert contacts;
         }

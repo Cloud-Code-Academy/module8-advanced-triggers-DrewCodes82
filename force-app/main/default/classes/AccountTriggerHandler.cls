@@ -25,7 +25,7 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
         AccountHelper.defaultContact(newAccsList);
     }
 
-    public override void beforeUpdate(){ 
+    /* public override void beforeUpdate(){ 
         
         
     }
@@ -48,6 +48,6 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
     public override void afterUndelete(){ 
         
         
-    }
+    } */
 
 }
