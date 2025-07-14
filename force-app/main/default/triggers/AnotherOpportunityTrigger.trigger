@@ -127,12 +127,24 @@ trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, b
     - Only updates the Opportunities that don't already have a primary contact.
     */
     private static void assignPrimaryContact(Map<Id,Opportunity> oppNewMap) {        
+        // Get Opp Account Ids
+        Set<Id> oppAccountIds =  new Set<Id>();
+        for (Opportunity opp : oppNewMap.values()){
+            oppAccountIds.add(opp.AccountId);
+        }
+        // Get Accounts and their related child Contacts where Title = VP Sales
+        Map<Id, Account> accMap = new Map<Id, Account>([SELECT Id, Name,
+                                                        (SELECT Id FROM Contacts WHERE Title = 'VP Sales')
+                                                        FROM Account
+                                                        WHERE Id IN :oppAccountIds]);
+        
         Map<Id, Opportunity> oppMap = new Map<Id, Opportunity>();
+        
         for (Opportunity opp : oppNewMap.values()){            
-            Contact primaryContact = [SELECT Id, AccountId FROM Contact WHERE Title = 'VP Sales' AND AccountId = :opp.AccountId LIMIT 1];
-            if (opp.Primary_Contact__c == null){
+            
+            if (opp.Primary_Contact__c == null && !accMap.get(opp.AccountId).Contacts.isEmpty()){
                 Opportunity oppToUpdate = new Opportunity(Id = opp.Id);
-                oppToUpdate.Primary_Contact__c = primaryContact.Id;
+                oppToUpdate.Primary_Contact__c = accMap.get(opp.AccountId).Contacts[0].Id;
                 oppMap.put(opp.Id, oppToUpdate);
             }
         }
