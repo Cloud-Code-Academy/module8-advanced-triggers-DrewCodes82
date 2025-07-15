@@ -18,33 +18,29 @@ RESOURCES:
 https://www.salesforceben.com/12-salesforce-apex-best-practices/
 https://developer.salesforce.com/blogs/developer-relations/2015/01/apex-best-practices-15-apex-commandments
 */
-trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, before update, after update, before delete, after delete, after undelete) {
-    if (Trigger.isBefore){
+/* trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, before update, after update, before delete, after delete, after undelete) { */
+    /* if (Trigger.isBefore){
         if (Trigger.isInsert){
             // Set default Type for new Opportunities
             for(Opportunity opp : Trigger.new){
                 if (opp.Type == null){
                     opp.Type = 'New Customer';
                 }
-            }
-            /* Opportunity opp = Trigger.new[0];
-             if (opp.Type == null){
-                opp.Type = 'New Customer';
-            }   */     
-        } 
+            }   
+        }  */
 
-        if (Trigger.isDelete){
+        /* if (Trigger.isDelete){
             // Prevent deletion of closed Opportunities
             for (Opportunity oldOpp : Trigger.old){
                 if (oldOpp.IsClosed){
                     oldOpp.addError('Cannot delete closed opportunity');
                 }
             }
-        }
+        } */
     }
 
-    if (Trigger.isAfter){
-        if (Trigger.isInsert){
+   /*  if (Trigger.isAfter){ */
+        /* if (Trigger.isInsert){
             // Create a new Task for newly inserted Opportunities
             List<Task> newTasks = new List<Task>();
             for (Opportunity opp : Trigger.new){
@@ -57,11 +53,11 @@ trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, b
                 newTasks.add(tsk);
             }
             insert newTasks;
-        } 
+        }  */
         
-        if (Trigger.isUpdate){
+       /*  if (Trigger.isUpdate){ */
             // Append Stage changes in Opportunity Description
-            List<Opportunity> oppsToUpdate = new List<Opportunity>();
+            /* List<Opportunity> oppsToUpdate = new List<Opportunity>();
             for (Opportunity opp : Trigger.new){
                 for (Opportunity oldOpp : Trigger.old){
                     if (opp.StageName != null && opp.StageName != oldOpp.StageName){
@@ -70,8 +66,8 @@ trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, b
                     }
                 }                
             }
-            update oppsToUpdate;
-        }
+            update oppsToUpdate; */
+/*         }
         // Send email notifications when an Opportunity is deleted 
         if (Trigger.isDelete){
             notifyOwnersOpportunityDeleted(Trigger.old);
@@ -80,14 +76,14 @@ trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, b
         if (Trigger.isUndelete){
             assignPrimaryContact(Trigger.newMap);
         }
-    }
+    } */
 
     /*
     notifyOwnersOpportunityDeleted:
     - Sends an email notification to the owner of the Opportunity when it gets deleted.
     - Uses Salesforce's Messaging.SingleEmailMessage to send the email.
     */
-    private static void notifyOwnersOpportunityDeleted(List<Opportunity> opps) {
+    /* private static void notifyOwnersOpportunityDeleted(List<Opportunity> opps) {
         List<Messaging.SingleEmailMessage> mails = new List<Messaging.SingleEmailMessage>();
         // Get OwnerIds from Opps
         Set<Id> ownerIds = new Set<Id>();
@@ -120,13 +116,13 @@ trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, b
             System.debug('Exception: ' + e.getMessage());
         }
     }
-
+ */
     /*
     assignPrimaryContact:
     - Assigns a primary contact with the title of 'VP Sales' to undeleted Opportunities.
     - Only updates the Opportunities that don't already have a primary contact.
     */
-    private static void assignPrimaryContact(Map<Id,Opportunity> oppNewMap) {        
+    /* private static void assignPrimaryContact(Map<Id,Opportunity> oppNewMap) {        
         // Get Opp Account Ids
         Set<Id> oppAccountIds =  new Set<Id>();
         for (Opportunity opp : oppNewMap.values()){
@@ -149,5 +145,5 @@ trigger AnotherOpportunityTrigger on Opportunity (before insert, after insert, b
             }
         }
         update oppMap.values();
-    }
-}
+    } */
+/* } */

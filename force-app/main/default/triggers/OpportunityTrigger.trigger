@@ -28,20 +28,20 @@ trigger OpportunityTrigger on Opportunity (before insert, after insert,
     * When an opportunity is updated validate that the amount is greater than 5000.
     * Trigger should only fire on update.
     */
-    if (Trigger.isUpdate && Trigger.isBefore){
+    /* if (Trigger.isUpdate && Trigger.isBefore){
         for(Opportunity opp : Trigger.new){
             if(opp.Amount < 5000){
                 opp.addError('Opportunity amount must be greater than 5000');
             }
         }
-    }
+    } */
 
     /*
     * Opportunity Trigger
     * When an opportunity is deleted prevent the deletion of a closed won opportunity if the account industry is 'Banking'.
     * Trigger should only fire on delete.
     */
-    if (Trigger.isDelete){
+    /* if (Trigger.isDelete){
         //Account related to the opportunities 
         Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Industry FROM Account WHERE Id IN (SELECT AccountId FROM Opportunity WHERE Id IN :Trigger.old)]);
         for(Opportunity opp : Trigger.old){
@@ -51,14 +51,14 @@ trigger OpportunityTrigger on Opportunity (before insert, after insert,
                 }
             }
         }
-    }
+    } */
 
     /*
     * Opportunity Trigger
     * When an opportunity is updated set the primary contact on the opportunity to the contact with the title of 'CEO'.
     * Trigger should only fire on update.
     */
-    if (Trigger.isUpdate && Trigger.isBefore){
+    /* if (Trigger.isUpdate && Trigger.isBefore){
         //Get contacts related to the opportunity account
         Set<Id> accountIds = new Set<Id>();
         for(Opportunity opp : Trigger.new){
@@ -81,5 +81,5 @@ trigger OpportunityTrigger on Opportunity (before insert, after insert,
                 }
             }
         }
-    }    
+    }     */
 }

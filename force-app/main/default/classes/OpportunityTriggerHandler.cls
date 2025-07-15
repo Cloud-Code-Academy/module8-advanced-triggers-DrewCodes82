@@ -14,37 +14,37 @@ public with sharing class OpportunityTriggerHandler extends TriggerHandler {
     }
 
     public override void beforeInsert(){ 
-        
+        OpportunityHelper.setDefaultType(newOppsList);
         
     }
 
     public override void afterInsert(){ 
-        
+        OpportunityHelper.createNewTask(newOppsList);
         
     }
 
     public override void beforeUpdate(){ 
-        
+        OpportunityHelper.validateAmount(newOppsList);
         
     }
 
     public override void afterUpdate(){ 
-        
+        OpportunityHelper.setPrimaryContact(newOppsList);
+        OpportunityHelper.updateDescription(oldOppsList, newOppsList);
         
     }
 
     public override void beforeDelete(){ 
-        
+        OpportunityHelper.preventDelete(oldOppsList);
         
     }
 
     public override void afterDelete(){ 
-        
-        
+        OpportunityHelper.notifyOwnersOpportunityDeleted(oldOppsList);
     }
 
     public override void afterUndelete(){ 
-        
+        OpportunityHelper.assignPrimaryContact(newOppsMap);
         
     }
 
