@@ -30,7 +30,7 @@ public with sharing class OpportunityTriggerHandler extends TriggerHandler {
 
     public override void afterUpdate(){ 
         OpportunityHelper.setPrimaryContact(newOppsList);
-        OpportunityHelper.updateDescription(oldOppsList, newOppsList);
+        OpportunityHelper.updateDescription(oldOppsMap, newOppsList);
         
     }
 

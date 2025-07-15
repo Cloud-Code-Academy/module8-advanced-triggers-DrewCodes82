@@ -67,16 +67,17 @@ public with sharing class OpportunityHelper {
     }
 
 
-    public static void updateDescription(List<Opportunity> oldOpps, List<Opportunity> newOpps){
+    public static void updateDescription(Map<Id, Opportunity> oldOppsMap, List<Opportunity> newOpps){
         List<Opportunity> oppsToUpdate = new List<Opportunity>();
         for (Opportunity opp : newOpps){
-            for (Opportunity oldOpp : oldOpps){
-                if (opp.StageName != null && opp.StageName != oldOpp.StageName){
-                    Opportunity updatedOpp = new Opportunity();
-                    updatedOpp.Id = opp.Id;
-                    updatedOpp.Description = (opp.Description == null ? '' : opp.Description) + 
-                    '\n Stage Change: ' + opp.StageName + ' : ' + Datetime.now().format();
-                }
+            Opportunity oldOpp = oldOppsMap.get(opp.Id);
+            if (opp.StageName != null && opp.StageName != oldOpp.StageName){
+                Opportunity updatedOpp = new Opportunity();
+                updatedOpp.Id = opp.Id;
+                updatedOpp.Description = (opp.Description == null ? '' : opp.Description) + 
+                '\nStage Change:' + opp.StageName + ' : ' + Datetime.now().format();
+                oppsToUpdate.add(updatedOpp);
+                
             }                
         }
         update oppsToUpdate; 
@@ -85,13 +86,9 @@ public with sharing class OpportunityHelper {
 
     //BEFORE_DELETE
     public static void preventDelete(List<Opportunity> oppList){
-        Map<Id, Account> accounts = new Map<Id, Account>([SELECT Id, Industry FROM Account WHERE Id IN (SELECT AccountId FROM Opportunity WHERE Id IN :oppList)]);
+        
         for(Opportunity opp : oppList){
-            if(opp.StageName == 'Closed Won'){
-                if(accounts.get(opp.AccountId).Industry == 'Banking'){
-                    opp.addError('Cannot delete a closed won opportunity for a banking account');
-                }
-            } else if(opp.isClosed){
+            if(opp.isClosed){
                 opp.addError('Cannot delete closed opportunity');
             }
         }
