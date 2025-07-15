@@ -10,7 +10,7 @@ public with sharing class AccountTriggerHandler extends TriggerHandler {
         this.newAccsMap = (Map<Id,Account>)Trigger.newMap;
         this.oldAccsList = (List<Account>)Trigger.old;
         this.oldAccsMap = (Map<Id,Account>)Trigger.oldMap;
-        this.setMaxLoopCount(1);
+        //this.setMaxLoopCount(1);
     }
 
     public override void beforeInsert(){ 

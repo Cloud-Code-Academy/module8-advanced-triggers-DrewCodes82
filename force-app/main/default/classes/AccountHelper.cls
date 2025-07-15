@@ -28,11 +28,10 @@ Always ensure that your helper methods are bulk-safe to handle multiple records 
 */
 public with sharing class AccountHelper {
 
-    private static Boolean hasRunDefaultContact = false;
-    
+
     // BEFORE_INSERT
     public static void setTypeProspect(List<Account> newAccsList){
-        
+              
         for (Account acc : newAccsList) {
             if (acc.Type == null) {
                 acc.Type = 'Prospect';
@@ -43,7 +42,7 @@ public with sharing class AccountHelper {
 
     // BEFORE_INSERT
     public static void addressCopy(List<Account> newAccsList){
-        
+
         for (Account acc : newAccsList) {
             if (acc.ShippingStreet != null) {
 				acc.BillingStreet = acc.ShippingStreet;
@@ -70,7 +69,7 @@ public with sharing class AccountHelper {
 
     // BEFORE_INSERT
     public static void setRating(List<Account> newAccsList){
-        
+
         for (Account acc : newAccsList) {
             if (acc.Phone != null && acc.Website != null && acc.Fax != null) {
                 acc.Rating = 'Hot';
@@ -82,12 +81,6 @@ public with sharing class AccountHelper {
     // AFTER INSERT
     public static void defaultContact(List<Account> newAccsList){
         
-        if(hasRunDefaultContact){
-            return;
-        }
-
-        hasRunDefaultContact = true;
-
         List<Contact> contacts = new List<Contact>();   
         for(Account acc : newAccsList){
             Contact con = new Contact();
